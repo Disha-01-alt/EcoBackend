@@ -12,7 +12,7 @@ app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")  # Ensure th
 
 # Enable CORS for your Netlify domain
 allowed_origins = [
-    "https://admirable-frangipane-21d5ff.netlify.app/"  # Netlify frontend domain
+    "https://your-netlify-app.netlify.app"  # Netlify frontend domain
 ]
 
 # Configure CORS with more options
