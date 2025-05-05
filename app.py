@@ -8,31 +8,32 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Create Flask app
 app = Flask(__name__)
-app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")  # Ensure this is set in your environment
+app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")
 
-# Enable CORS for your Netlify domain
+# Allow Netlify frontend to access backend
 allowed_origins = [
-    "https://your-netlify-app.netlify.app"  # Netlify frontend domain
+    "https://admirable-frangipane-21d5ff.netlify.app",  # ✅ Your Netlify domain
+    "http://localhost:3000",  # Optional for local development
+    "http://127.0.0.1:5000"
 ]
 
-# Configure CORS with more options
-CORS(app, resources={r"/*": {"origins": allowed_origins, "supports_credentials": True}})
+# Enable CORS
+CORS(app, resources={r"/*": {"origins": allowed_origins}}, supports_credentials=True)
 
 # Import routes
 from routes.index import index_bp
 from routes.api import api_bp
 
+# Serve frontend partials
 @app.route("/assets/pages/<path:filename>")
 def serve_partials(filename):
-    # Ensure the "assets/pages" directory exists and contains the required files
     return send_from_directory("assets/pages", filename)
 
-# Register blueprints
+# Register routes
 app.register_blueprint(index_bp)
 app.register_blueprint(api_bp, url_prefix='/api')
 
-# Main entry point for Flask app
+# Run app
 if __name__ == "__main__":
-    # Use host="0.0.0.0" for external access and specify the port, or use an environment variable
-    port = int(os.environ.get("PORT", 5000))  # Make sure the port matches your platform’s configuration
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
