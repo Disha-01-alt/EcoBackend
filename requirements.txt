@@ -18,7 +18,7 @@ dash==3.0.2
 dateparser==1.2.1
 dnspython==2.7.0
 earthengine-api==1.5.9
-email-validator==2.1.0
+email-validator==2.0.0.post2
 entrypoints==0.4
 fake-useragent==2.2.0
 Faker==37.1.0
