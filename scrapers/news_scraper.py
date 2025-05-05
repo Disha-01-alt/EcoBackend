@@ -28,14 +28,14 @@ def get_driver() -> webdriver.Chrome:
     )
     return driver
 
-
 def get_environmental_news() -> List[Dict[str, Any]]:
     logger.info("Starting Guardian scraper...")
     url = "https://www.theguardian.com/environment"
     articles = []
+    driver = None  # <-- initialize driver to None first
 
     try:
-        driver = get_driver()
+        driver = get_driver()  # may fail
         driver.get(url)
         time.sleep(3)
 
@@ -60,24 +60,13 @@ def get_environmental_news() -> List[Dict[str, Any]]:
                     break
             except Exception as e:
                 logger.debug(f"Error extracting Guardian article: {e}")
+
     except Exception as e:
         logger.error(f"Guardian scraping failed: {e}")
+
     finally:
-        driver.quit()
+        if driver:
+            driver.quit()  # only quit if driver was initialized
 
     logger.info(f"Found {len(articles)} Guardian articles")
     return articles
-
-
-#def scrape_all_news() -> List[Dict[str, Any]]:
-#    guardian_articles = get_environmental_news()
-#    all_articles =  guardian_articles
-#    logger.info(f"Total articles: {len(all_articles)}")
-#    return all_articles
-#
-#
-#if __name__ == "__main__":
-#    results = scrape_all_news()
-#    for article in results:
-#        print(article)
-#
