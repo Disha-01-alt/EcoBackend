@@ -4,7 +4,6 @@ import json
 import requests
 import pandas as pd
 import csv
-from flask import redirect
 from flask import Blueprint, jsonify, request
 from utils.api_helpers import fetch_with_cache
 from utils.data_processing import process_aqi_data, process_bird_data, process_pollution_data
