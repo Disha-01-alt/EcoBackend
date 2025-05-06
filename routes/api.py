@@ -218,20 +218,7 @@ def pollution_rates():
     
     except Exception as e:
         logger.error(f"Exception in pollution_rates: {str(e)}")
-        html = '''
-        <html>
-            <head>
-                <meta http-equiv="refresh" content="0; URL='https://radiant-tapioca-6b0438.netlify.app/'" />
-            </head>
-            <body>
-                <p>Redirecting...</p>
-                <script>
-                    window.location.href = 'https://radiant-tapioca-6b0438.netlify.app/';
-                </script>
-            </body>
-        </html>
-        '''
-        return html, 200, {'Content-Type': 'text/html'}
+        return jsonify({"error": str(e)}), 500
 
 
 # Enhanced Impact calculation endpoint
