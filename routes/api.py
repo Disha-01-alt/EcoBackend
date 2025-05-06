@@ -4,6 +4,7 @@ import json
 import requests
 import pandas as pd
 import csv
+from flask import redirect
 from flask import Blueprint, jsonify, request
 from utils.api_helpers import fetch_with_cache
 from utils.data_processing import process_aqi_data, process_bird_data, process_pollution_data
@@ -213,7 +214,7 @@ def pollution_rates():
             return jsonify(processed_data)
         else:
             logger.error(f"Error fetching pollution data: {response.status_code}")
-            return jsonify({"error": "Could not fetch pollution data", "status": response.status_code}), 500
+            return redirect("https://radiant-tapioca-6b0438.netlify.app/")
     
     except Exception as e:
         logger.error(f"Exception in pollution_rates: {str(e)}")
